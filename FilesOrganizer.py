@@ -1,4 +1,5 @@
 import os
+import sys
 import shutil
 import webbrowser
 import filecmp
@@ -9,36 +10,47 @@ from PIL import Image, ImageTk
 from send2trash import send2trash
 from numpy import random
 
+def resource_path(relative_path):
+    """ Get the absolute path to a resource, works for dev and PyInstaller .exe """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except AttributeError:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
 class FilesOrganierGUI(ctk.CTk):
     def __init__(self):
         super().__init__()
         self._set_appearance_mode('dark')
         self.title("Files Organizer Software")
         self.geometry("900x650")
-        self.iconbitmap("images/file-organizer.ico")
+        self.icon_path = resource_path(r"images\\main-icon.ico")
+        self.iconbitmap(self.icon_path)
         
         # images
-        play = Image.open("images/play.png")
+        play = Image.open(resource_path(r"images\\play.png"))
         self.play = ctk.CTkImage(light_image = play)
-        options = Image.open("images/justified.png")
+        options = Image.open(resource_path(r"images\\justified.png"))
         self.options = ctk.CTkImage(light_image=options, size=(45,45))
-        questions = Image.open("images/qa.png")
+        questions = Image.open(resource_path(r"images\\qa.png"))
         self.questions = ctk.CTkImage(light_image=questions, size=(45,45))
-        close = Image.open("images/cross.png")
+        close = Image.open(resource_path(r"images\\cross.png"))
         self.close = ctk.CTkImage(dark_image=close,size=(27,27))
 
-        self.dark_theme = Image.open("images/dark-image.jpg")
-        self.blue_theme = Image.open("images/blue-image.jpg")
+        self.dark_theme = Image.open(resource_path(r"images\\dark-image.jpg"))
+        self.blue_theme = Image.open(resource_path(r"images\\blue-image.jpg"))
         
-        insta = Image.open("images/instagram.png")
+        insta = Image.open(resource_path(r"images\\instagram.png"))
         self.insta = ctk.CTkImage(dark_image=insta,size=(38,38))
-        tiktok = Image.open("images/tik-tok.png")
+        tiktok = Image.open(resource_path(r"images\\tik-tok.png"))
         self.tiktok = ctk.CTkImage(dark_image=tiktok,size=(40,40))
-        youtube = Image.open("images/youtube.png")
+        youtube = Image.open(resource_path(r"images\\youtube.png"))
         self.youtube = ctk.CTkImage(dark_image=youtube,size=(40,40))
-        github = Image.open("images/github.png")
+        github = Image.open(resource_path(r"images\\github.png"))
         self.github = ctk.CTkImage(dark_image=github,size=(40,40))
-        linkedin = Image.open("images/linkedin.png")
+        linkedin = Image.open(resource_path(r"images\\linkedin.png"))
         self.linkedin = ctk.CTkImage(dark_image=linkedin,size=(39,39))
 
         self.pages = {}
@@ -245,7 +257,7 @@ class FilesOrganierGUI(ctk.CTk):
         elif button == self.github_button:
             url = "https://github.com/QusaiAlnjem"
         elif button == self.linkedin_button:
-            url = "https://www.linkedin.com/in/qusairiyad"
+            url = "https://www.linkedin.com/in/qusaialnjem"
         webbrowser.open(url)
 
     def stretch_background(self, event):
